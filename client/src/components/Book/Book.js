@@ -20,7 +20,7 @@ const Book = ({ book, auth, deleteBook, withdrawBook, editBook, clearBookError }
     e.preventDefault();
     if (isEdit) {
       withdrawBook(id, quantity);
-      setIsEdit((oldIsEdit) => !oldIsEdit);
+      // setIsEdit((oldIsEdit) => !oldIsEdit);
     }
   };
 
@@ -44,7 +44,7 @@ const Book = ({ book, auth, deleteBook, withdrawBook, editBook, clearBookError }
       <div className="card">
         <div className='card-body'>
           <h5 className="card-title">{book.title}</h5>
-          <h6 class="card-subtitle mb-2 text-muted"> By {book.author} ({book.year})</h6>
+          <h6 className="card-subtitle mb-2 text-muted"> By {book.author} ({book.year})</h6>
 
           <p className="">Genre: {book.genre}</p>
           {!moment(book.createdAt).isSame(book.updatedAt, 'minute') && (

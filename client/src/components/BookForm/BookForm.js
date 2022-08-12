@@ -32,7 +32,7 @@ const BookForm = ({ addBook, book: { books } }) => {
       <form onSubmit={formik.handleSubmit} className="row card-body">
       <h4 className='card-title'>Add a book</h4>
         <div className="col-lg-8 mb-3">
-          <label for="title" className="form-label">Book Title</label>
+          <label htmlFor="title" className="form-label">Book Title</label>
           <textarea
             name="title"
             cols="30"
@@ -50,7 +50,7 @@ const BookForm = ({ addBook, book: { books } }) => {
         </div>
         
         <div className="col-lg-4 mb-3">
-          <label for="author" className="form-label">Initial Stock</label>
+          <label htmlFor="author" className="form-label">Initial Stock</label>
           <input
               placeholder="1"
               name="stock"
@@ -66,7 +66,7 @@ const BookForm = ({ addBook, book: { books } }) => {
         </div>
 
         <div className="col-lg-4 mb-3">
-          <label for="author" className="form-label">Author</label>
+          <label htmlFor="author" className="form-label">Author</label>
           <input
               placeholder="Jane Doe"
               name="author"
@@ -82,7 +82,7 @@ const BookForm = ({ addBook, book: { books } }) => {
         </div>
 
         <div className="col-lg-4 mb-3">
-          <label for="author" className="form-label">Year</label>
+          <label htmlFor="author" className="form-label">Year</label>
           <input
               placeholder="2020"
               name="year"
@@ -98,7 +98,7 @@ const BookForm = ({ addBook, book: { books } }) => {
         </div>
 
         <div className="col-lg-4 mb-3">
-          <label for="author" className="form-label">Genre</label>
+          <label htmlFor="author" className="form-label">Genre</label>
           <input
               placeholder="Comedy"
               name="genre"

@@ -21,7 +21,7 @@ const BookList = ({ getBooks, searchBooks, book: { books, isLoading, error } }) 
       <div className='row'>
       <h2 className='col-lg-8 '>Books:</h2>
       <div className="col-lg-4 mb-3">
-          <label for="author" class="form-label">Search</label>
+          <label htmlFor="author" className="form-label">Search</label>
           <input
               className="form-control mb-2"
               type="text"

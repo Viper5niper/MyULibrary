@@ -3,19 +3,49 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import {  } from '../../store/actions/bookActions';
+import { returnBook } from '../../store/actions/bookActions';
 
 
-const Borrow = ({ auth, user }) => {
-  // dont reset form if there is an error
+const Borrow = ({ auth, user, returnBook}) => {
+
+  // function to dispatch returnBook action
+  const returnBookHandler = (e, bookId, uid) => {
+    console.log(bookId);
+    returnBook(bookId, uid);
+  }
+
+
   useEffect(() => {
-
-  }, []);
+  }, [user.isLoading, user.error]);
 
   return (
     <div className={user.isLoading ? 'book loader' : 'book'}>
       <div className="card">
-        {JSON.stringify(user)}
+        <div className="card-body">
+          <h5 className="card-title">{user.firstname + ' ' + user.lastname}</h5>
+          <p className="card-text">{user.email}</p>
+          
+          <ul className="list-group list-group-flush">
+
+            {user.populatedWithdrawals.map((withdrawal, index) => {
+              return <li key={index} className="list-group-item">
+                <div className="row">
+                  <div className="col-md-6">
+                    <p>{withdrawal.book.title}</p>
+                  </div>
+                  <div className="col-md-6">
+                    <p>{moment(withdrawal.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                  </div>
+                  {/* button to return book */}
+                  <div className="col-md-12">
+                    <button className="btn btn-primary" onClick={(e) => returnBookHandler(e, withdrawal.id, user.id)}>Return</button>
+                  </div>
+                </div>
+              </li>;
+            })}
+          </ul>
+
+        </div>
       </div>
     </div>
   );
@@ -25,4 +55,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Borrow);
+export default connect(mapStateToProps, { returnBook })(Borrow);

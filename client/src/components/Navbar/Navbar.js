@@ -38,7 +38,7 @@ const Navbar = ({ auth, logOutUser, history }) => {
 
             {/* <img src={auth.me.avatar} /> */}
             <li className="nav-item" onClick={onLogOut}>
-              <Link className="nav-link" href="#">Log out</Link>
+              <Link className="nav-link" to="#">Log out</Link>
             </li>
           </ul>
         ) : (

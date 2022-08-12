@@ -14,6 +14,9 @@ import {
   EDIT_BOOK_LOADING,
   EDIT_BOOK_SUCCESS,
   EDIT_BOOK_FAIL,
+  EDIT_WITHDRAWAL_LOADING,
+  EDIT_WITHDRAWAL_SUCCESS,
+  EDIT_WITHDRAWAL_FAIL,
   BORROW_BOOK_LOADING,
   BORROW_BOOK_SUCCESS,
   BORROW_BOOK_FAIL,
@@ -78,7 +81,7 @@ export const getWithdrawals = () => async (dispatch, getState) => {
 
     dispatch({
       type: GET_WITHDRAWALS_SUCCESS,
-      payload: { users: response.data.users },
+      payload: { usersWithdrawals: response.data.users },
     });
   } catch (err) {
     dispatch({
@@ -88,6 +91,29 @@ export const getWithdrawals = () => async (dispatch, getState) => {
   }
 };
     
+// mark withrawal as returned
+export const returnBook = (withdrawal, uid) => async (dispatch, getState) => {
+  dispatch({
+    type: EDIT_WITHDRAWAL_LOADING,
+    payload: { id: uid },
+  });
+
+  console.log(withdrawal);
+  try {
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.put('/api/withdrawals/'+withdrawal, {}, options);
+    
+    dispatch({
+      type: EDIT_WITHDRAWAL_SUCCESS,
+      payload: { userWithdrawal: response.data.userWithdrawal },
+    });
+  } catch (err) {
+    dispatch({
+      type: EDIT_WITHDRAWAL_FAIL,
+      payload: { error: err?.response?.data.message || err.message, id: withdrawal },
+    });
+  }
+}
 
 export const addBook = (formData) => async (dispatch, getState) => {
   dispatch({

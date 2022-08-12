@@ -19,8 +19,8 @@ export const seedDb = async () => {
 
     const user = new User({
       provider: 'email',
-      firstname: 'Lorem',
-      lastname: 'Ipsum',
+      firstname: faker.name.firstName(),
+      lastname: faker.name.lastName(),
       username: `user${index}`,
       email: `email${index}@email.com`,
       password: '123456789',

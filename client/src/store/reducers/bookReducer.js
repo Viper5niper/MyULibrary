@@ -14,9 +14,6 @@ import {
   BORROW_BOOK_LOADING,
   BORROW_BOOK_SUCCESS,
   BORROW_BOOK_FAIL,
-  GET_WITHDRAWALS_LOADING,
-  GET_WITHDRAWALS_SUCCESS,
-  GET_WITHDRAWALS_FAIL,
   CLEAR_BOOK_ERROR,
 } from '../types';
 
@@ -31,11 +28,6 @@ const initialState = {
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_BOOKS_LOADING:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case GET_WITHDRAWALS_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -80,12 +72,6 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         isLoading: false,
         books: payload.books,
-      };
-    case GET_WITHDRAWALS_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        users: payload.users,
       };
     case ADD_BOOK_SUCCESS:
       return {
@@ -136,12 +122,6 @@ export default function (state = initialState, { type, payload }) {
         }),
       };
     case GET_BOOKS_FAIL:
-      return {
-        ...state,
-        isLoading: false,
-        error: payload.error,
-      };
-    case GET_WITHDRAWALS_FAIL:
       return {
         ...state,
         isLoading: false,

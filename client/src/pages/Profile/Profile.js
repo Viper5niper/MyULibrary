@@ -12,7 +12,6 @@ import Loader from '../../components/Loader/Loader';
 import requireAuth from '../../hoc/requireAuth';
 import { profileSchema } from './validation';
 
-import './styles.css';
 
 const Profile = ({
   getProfile,
