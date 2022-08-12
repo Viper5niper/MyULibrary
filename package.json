@@ -9,7 +9,7 @@
     "start-dev": "node --experimental-modules babel-node server/src/index.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix server && npm install --prefix client && npm run build --prefix client"
   },
-  "author": "Nemanja Mitic (https://github.com/nemanjam)",
+  "author": "Ruben Mulato (https://github.com/Viper5niper)",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {}

@@ -4,7 +4,7 @@ This is a test library app for FOCUS, made with React, Redux, Express, Mongoose 
 
 ## Demo
 
-Live demo is available here: **[Demo](/)**
+Live demo is available here: **[Demo](https://myulibrary-app.herokuapp.com/)**
 You can use the credentials available in login page to test the app.
 
 ### MIT
