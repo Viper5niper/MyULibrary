@@ -1,5 +1,5 @@
 {
-  "name": "mern-boilerplate",
+  "name": "my-u-library",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,7 +16,7 @@
     "client": "npm start --prefix ../client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
-  "author": "Nemanja Mitic (https://github.com/nemanjam)",
+  "author": "Ruben Mulato https://github.com/Viper5niper",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
