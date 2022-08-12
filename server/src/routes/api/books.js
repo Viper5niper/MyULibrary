@@ -2,6 +2,8 @@ import { Router } from 'express';
 import requireJwtAuth from '../../middleware/requireJwtAuth';
 import Book, { validateBook } from '../../models/Book';
 
+import Withdrawal from '../../models/Withdrawal';
+
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -72,10 +74,14 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
     if (!(req.user.role === 'ADMIN'))
       return res.status(400).json({ message: 'You have no permission to do that.' });
 
+    // delete withdrawal if book is deleted
+    await Withdrawal.deleteMany({ book: tempBook._id });
+
     const book = await Book.findByIdAndRemove(req.params.id);
     if (!book) return res.status(404).json({ message: 'No book found.' });
     res.status(200).json({ book });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: 'Something went wrong.' });
   }
 });
