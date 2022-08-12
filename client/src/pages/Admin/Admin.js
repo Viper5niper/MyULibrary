@@ -3,19 +3,17 @@ import { Link } from 'react-router-dom';
 
 import requireAdmin from '../../hoc/requireAdmin';
 import Layout from '../../layout/Layout';
-import './styles.css';
+import BorrowsList from '../../components/BorrowsList/BorrowsList';
 
 const Admin = () => {
   return (
     <Layout>
-      <div className="admin-page">
-        <h1>Admin dashboard</h1>
+      <div className="row mt-4">
+        <h1>Home page</h1>
         <p>
-          This is the Admin page. Only the Admin can access this page. Return back to{' '}
-          <Link className="bold" to="/">
-            Home
-          </Link>
+          Welcome! Here you can checkout the list of all the books that are currently borrowed.
         </p>
+        <BorrowsList />
       </div>
     </Layout>
   );

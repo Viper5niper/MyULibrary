@@ -37,7 +37,7 @@ const BookList = ({ getBooks, searchBooks, book: { books, isLoading, error } }) 
         ) : (
           <div className="row">
             {books.map((book, index) => {
-              return <div key={index} className='col-md-4'><Book key={index} book={book} /></div>;
+              return <div key={index} className='col-md-4 mb-2'><Book key={index} book={book} /></div>;
             })}
           </div>
         )}

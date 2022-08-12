@@ -14,8 +14,8 @@ import { loginSchema } from './validation';
 const Login = ({ auth, history, loginUserWithEmail }) => {
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: 'email0@email.com',
+      password: '123456789',
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {

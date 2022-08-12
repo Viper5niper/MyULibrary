@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { useFormik } from 'formik';
 
-import { deleteBook, editBook, clearBookError } from '../../store/actions/bookActions';
-import { bookFormSchema } from './validation';
+import { deleteBook, withdrawBook, editBook, clearBookError } from '../../store/actions/bookActions';
 
 
-const Book = ({ book, auth, deleteBook, editBook, clearBookError }) => {
+const Book = ({ book, auth, deleteBook, withdrawBook, editBook, clearBookError }) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const handleDelete = (e, id) => {
@@ -18,29 +16,22 @@ const Book = ({ book, auth, deleteBook, editBook, clearBookError }) => {
     }
   };
 
+  const HandleBorrow = (e, id, quantity) => {
+    e.preventDefault();
+    if (isEdit) {
+      withdrawBook(id, quantity);
+      setIsEdit((oldIsEdit) => !oldIsEdit);
+    }
+  };
+
   const handleClickEdit = (e) => {
     e.preventDefault();
-    formik.setFieldValue('text', book.text);
     setIsEdit((oldIsEdit) => !oldIsEdit);
   };
 
-  const formik = useFormik({
-    enableReinitialize: true,
-    initialValues: {
-      text: '',
-      id: book.id,
-    },
-    validationSchema: bookFormSchema,
-    onSubmit: (values, { resetForm }) => {
-      editBook(values.id, { text: values.text });
-      setIsEdit(false);
-      // resetForm();
-    },
-  });
-
   // dont reset form if there is an error
   useEffect(() => {
-    if (!book.error && !book.isLoading) formik.resetForm();
+
   }, [book.error, book.isLoading]);
 
   // keep edit open if there is an error
@@ -56,65 +47,51 @@ const Book = ({ book, auth, deleteBook, editBook, clearBookError }) => {
           <h6 class="card-subtitle mb-2 text-muted"> By {book.author} ({book.year})</h6>
 
           <p className="">Genre: {book.genre}</p>
-          <p className="">Copies avialable: {book.stock}</p>
-          <span className="">{" Added " + moment(book.createdAt).fromNow()}</span>
           {!moment(book.createdAt).isSame(book.updatedAt, 'minute') && (
             <span className="">{`Edited: ${moment(
               book.updatedAt,
             ).fromNow()}`}</span>
           )}
-        </div>
-      </div>
-      <form onSubmit={formik.handleSubmit}>
-        {isEdit ? (
-          <>
-            <textarea
-              name="text"
-              rows="3"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.text}
-              disabled={book.isLoading}
-            />
-            <input type="hidden" name="id" />
-            {(formik.touched.text && formik.errors.text) || book.error ? (
-              <p className="error">{formik.errors.text || book.error}</p>
-            ) : null}
-          </>
-        ) : (
-          <p>{book.text}</p>
-        )}
-        {auth.isAuthenticated && auth.me.role === 'ADMIN' && (
-          <>
-            {!isEdit ? (
-              <>
-                <button onClick={handleClickEdit} type="button" className="btn">
-                  Edit
-                </button>
-                <button onClick={(e) => handleDelete(e, book.id)} type="button" className="btn">
-                  Delete
-                </button>
-              </>
+            {isEdit ? (
+              <p className="">Copies avialable: {book.stock}</p>
             ) : (
+              <p>See details for existencies</p>
+            )}
+            {auth.isAuthenticated && (
               <>
-                <button type="submit" className="btn" disabled={book.isLoading}>
-                  Submit
-                </button>
-                <button
-                  onClick={() => {
-                    setIsEdit((oldIsEdit) => !oldIsEdit);
-                    clearBookError(book.id);
-                  }}
-                  type="button"
-                  className="btn"
-                >
-                  Cancel
-                </button>
+                {!isEdit ? (
+                  <>
+                    <button onClick={handleClickEdit} type="button" className="btn btn-primary">
+                      Details
+                    </button>{' '}
+                    
+                    {auth.me?.role === 'ADMIN' && 
+                    <button onClick={(e) => handleDelete(e, book.id)} type="button" className="btn btn-primary">
+                      Delete
+                    </button>}
+                  </>
+                ) : (
+                  <>
+                    <button className="btn btn-primary" onClick={(e) => HandleBorrow(e, book.id, 1)} disabled={book.isLoading}>
+                      Borrow
+                    </button>{' '} 
+                    <button
+                      onClick={() => {
+                        setIsEdit((oldIsEdit) => !oldIsEdit);
+                        clearBookError(book.id);
+                      }}
+                      type="button"
+                      className="btn btn-primary"
+                    >
+                      Cancel
+                    </button>
+                  </>
+                )}
               </>
             )}
-          </>
-        )}
-      </form>
+          
+        </div>
+      </div>
     </div>
   );
 };
@@ -123,4 +100,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { deleteBook, editBook, clearBookError })(Book);
+export default connect(mapStateToProps, { deleteBook, editBook, withdrawBook, clearBookError })(Book);

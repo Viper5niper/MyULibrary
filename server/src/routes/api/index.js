@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import usersRoutes from './users';
-import messagesRoutes from './messages';
 import booksRoutes from './books';
+import withdrawalsRoutes from './withdrawals';
 const router = Router();
 
 router.use('/users', usersRoutes);
-router.use('/messages', messagesRoutes);
 router.use('/books', booksRoutes);
+router.use('/withdrawals', withdrawalsRoutes);
 
 export default router;

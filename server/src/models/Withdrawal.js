@@ -27,10 +27,12 @@ withdrawalSchema.methods.toJSON = function () {
 export const validateWithdrawal = (withdrawal) => {
   const schema = {
     quantity: Joi.number().required().min(1),
+    book: Joi.required(),
+    user: Joi.string(),
   };
   return Joi.validate(withdrawal, schema);
 };
 
-const Message = mongoose.model('Message', withdrawalSchema);
+const Withdrawal = mongoose.model('Withdrawal', withdrawalSchema);
 
-export default Message;
+export default Withdrawal;

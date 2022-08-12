@@ -11,6 +11,12 @@ import {
   EDIT_BOOK_LOADING,
   EDIT_BOOK_SUCCESS,
   EDIT_BOOK_FAIL,
+  BORROW_BOOK_LOADING,
+  BORROW_BOOK_SUCCESS,
+  BORROW_BOOK_FAIL,
+  GET_WITHDRAWALS_LOADING,
+  GET_WITHDRAWALS_SUCCESS,
+  GET_WITHDRAWALS_FAIL,
   CLEAR_BOOK_ERROR,
 } from '../types';
 
@@ -25,6 +31,11 @@ const initialState = {
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case GET_BOOKS_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case GET_WITHDRAWALS_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -56,11 +67,25 @@ export default function (state = initialState, { type, payload }) {
           return b;
         }),
       };
+    case BORROW_BOOK_LOADING:
+      return {
+        ...state,
+        books: state.books.map((b) => {
+          if (b.id === payload.id) return { ...b, isLoading: true };
+          return b;
+        }),
+      };
     case GET_BOOKS_SUCCESS:
       return {
         ...state,
         isLoading: false,
         books: payload.books,
+      };
+    case GET_WITHDRAWALS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        users: payload.users,
       };
     case ADD_BOOK_SUCCESS:
       return {
@@ -83,6 +108,14 @@ export default function (state = initialState, { type, payload }) {
           return b;
         }),
       };
+    case BORROW_BOOK_SUCCESS:
+      return {
+        ...state,
+        books: state.books.map((b) => {
+          if (b.id === payload.book.id) return payload.book;
+          return b;
+        }),
+      };
     case DELETE_BOOK_FAIL:
     case EDIT_BOOK_FAIL:
       return {
@@ -93,7 +126,22 @@ export default function (state = initialState, { type, payload }) {
           return b;
         }),
       };
+    case BORROW_BOOK_FAIL:
+      return {
+        ...state,
+        error: null,
+        books: state.books.map((b) => {
+          if (b.id === payload.id) return { ...b, isLoading: false, error: payload.error };
+          return b;
+        }),
+      };
     case GET_BOOKS_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload.error,
+      };
+    case GET_WITHDRAWALS_FAIL:
       return {
         ...state,
         isLoading: false,

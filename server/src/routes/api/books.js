@@ -11,8 +11,6 @@ router.get('/', async (req, res) => {
 
     var books;
 
-    console.log('books obtaining');
-
     if (search) {
       console.log('searching for: ' + search);
       books = await Book.find({

@@ -5,7 +5,7 @@ import { resolve } from 'path';
 import { registerSchema } from '../../services/validators';
 import requireJwtAuth from '../../middleware/requireJwtAuth';
 import User, { hashPassword, validateUser } from '../../models/User';
-import Message from '../../models/Message';
+// import Message from '../../models/Message';
 import { seedDb } from '../../utils/seed';
 
 const router = Router();
@@ -157,7 +157,7 @@ router.delete('/:id', requireJwtAuth, async (req, res) => {
     //   return res.status(400).json({ message: 'You can not delete seeded user.' });
 
     //delete all messages from that user
-    await Message.deleteMany({ user: tempUser.id });
+    // await Message.deleteMany({ user: tempUser.id });
     //delete user
     const user = await User.findByIdAndRemove(tempUser.id);
     res.status(200).json({ user });

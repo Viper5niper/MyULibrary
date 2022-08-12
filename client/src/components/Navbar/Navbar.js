@@ -30,15 +30,15 @@ const Navbar = ({ auth, logOutUser, history }) => {
             <li className="nav-item">
               <Link className="nav-link" to={`/${auth.me.username}`}>Profile</Link>
             </li>
-            {auth.me?.role === 'ADMIN' && (
+            {auth.me?.role === 'ADMIN' && 
               <li className="nav-item">
-                <Link to="/admin">Admin</Link>
+                <Link className="nav-link" to="/admin">Checkout</Link>
               </li>
-            )}
+            }
 
             {/* <img src={auth.me.avatar} /> */}
             <li className="nav-item" onClick={onLogOut}>
-              <a href="#">Log out</a>
+              <Link className="nav-link" href="#">Log out</Link>
             </li>
           </ul>
         ) : (

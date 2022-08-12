@@ -14,6 +14,12 @@ import {
   EDIT_BOOK_LOADING,
   EDIT_BOOK_SUCCESS,
   EDIT_BOOK_FAIL,
+  BORROW_BOOK_LOADING,
+  BORROW_BOOK_SUCCESS,
+  BORROW_BOOK_FAIL,
+  GET_WITHDRAWALS_LOADING,
+  GET_WITHDRAWALS_SUCCESS,
+  GET_WITHDRAWALS_FAIL,
   CLEAR_BOOK_ERROR,
 } from '../types';
 
@@ -25,7 +31,6 @@ export const getBooks = () => async (dispatch, getState) => {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get('/api/books', options);
 
-    console.log(response);
     dispatch({
       type: GET_BOOKS_SUCCESS,
       payload: { books: response.data.books },
@@ -37,6 +42,52 @@ export const getBooks = () => async (dispatch, getState) => {
     });
   }
 };
+
+// withdrawBook book from stock in the database
+export const withdrawBook = (book, quantity) => async (dispatch, getState) => {
+  dispatch({
+    type: BORROW_BOOK_LOADING,
+    payload: { id: book },
+  });
+  try {
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.post('/api/withdrawals', { book, quantity }, options);
+    
+    dispatch({
+      type: BORROW_BOOK_SUCCESS,
+      payload: { book: response.data.book },
+    });
+  } catch (err) {
+      dispatch({
+        type: BORROW_BOOK_FAIL,
+        payload: { error: err?.response?.data.message || err.message, id: book },
+      });
+  }
+}
+
+// get withrawals
+export const getWithdrawals = () => async (dispatch, getState) => {
+  dispatch({
+    type: GET_WITHDRAWALS_LOADING,
+  });
+  try {
+    const options = attachTokenToHeaders(getState);
+    const response = await axios.get('/api/withdrawals', options);
+
+    console.log(response.data.users);
+
+    dispatch({
+      type: GET_WITHDRAWALS_SUCCESS,
+      payload: { users: response.data.users },
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_WITHDRAWALS_FAIL,
+      payload: { error: err?.response?.data.message || err.message },
+    });
+  }
+};
+    
 
 export const addBook = (formData) => async (dispatch, getState) => {
   dispatch({

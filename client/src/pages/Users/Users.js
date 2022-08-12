@@ -9,8 +9,6 @@ import Layout from '../../layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import requireAuth from '../../hoc/requireAuth';
 
-import './styles.css';
-
 const Users = ({ getUsers, users: { users, isLoading } }) => {
   useEffect(() => {
     getUsers();
