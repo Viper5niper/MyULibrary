@@ -2,7 +2,6 @@
 
 This is a test library app for FOCUS, made with React, Redux, Express, Mongoose and Passport.
 
-
 ## Demo
 
 Live demo is available here: **[Demo](/)**
