@@ -77,8 +77,6 @@ export const getWithdrawals = () => async (dispatch, getState) => {
     const options = attachTokenToHeaders(getState);
     const response = await axios.get('/api/withdrawals', options);
 
-    console.log(response.data.users);
-
     dispatch({
       type: GET_WITHDRAWALS_SUCCESS,
       payload: { usersWithdrawals: response.data.users },
@@ -97,8 +95,6 @@ export const returnBook = (withdrawal, uid) => async (dispatch, getState) => {
     type: EDIT_WITHDRAWAL_LOADING,
     payload: { id: uid },
   });
-
-  console.log(withdrawal);
   try {
     const options = attachTokenToHeaders(getState);
     const response = await axios.put('/api/withdrawals/'+withdrawal, {}, options);
@@ -143,7 +139,6 @@ export const searchBooks = (searchTerm) => async (dispatch, getState) => {
   });
   try {
 
-    console.log('searching for: ' + searchTerm);
     const options = attachTokenToHeaders(getState);
     const response = await axios.get(`/api/books?search=${searchTerm}`, options);
 

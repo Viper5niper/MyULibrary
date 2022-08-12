@@ -15,11 +15,13 @@ export const seedDb = async () => {
   await deleteAllAvatars(join(__dirname, '../..', process.env.IMAGES_FOLDER_PATH));
 
   // create 3 users
+  const genres = ['male','male','female'];
+
   const usersPromises = [...Array(3).keys()].map((index, i) => {
 
     const user = new User({
       provider: 'email',
-      firstname: faker.name.firstName(),
+      firstname: faker.name.firstName(genres[index]),
       lastname: faker.name.lastName(),
       username: `user${index}`,
       email: `email${index}@email.com`,

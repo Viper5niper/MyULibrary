@@ -10,7 +10,6 @@ export const registerUserWithEmail = (formData) => async (dispatch, getState) =>
   dispatch({ type: REGISTER_WITH_EMAIL_LOADING });
   try {
 
-    console.log(formData);
     await axios.post('/api/users', formData);
     dispatch({
       type: REGISTER_WITH_EMAIL_SUCCESS,

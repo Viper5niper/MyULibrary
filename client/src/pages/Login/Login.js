@@ -29,7 +29,7 @@ const Login = ({ auth, history, loginUserWithEmail }) => {
     <div className="card m-4 mx-auto" style={{maxWidth: '50%'}}>
       <div className="card-body mx-2">
         <h2 className='card-title ml-4'>Log in</h2>
-        <h6 class="card-subtitle mb-4 text-muted">
+        <h6 className="card-subtitle mb-4 text-muted">
           back to{' '}
           <Link className="bold" to="/">
             Home page

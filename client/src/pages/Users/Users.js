@@ -19,18 +19,17 @@ const Users = ({ getUsers, users: { users, isLoading }, register: { regIsLoading
 
   const formik = useFormik({
     initialValues: {
-      firstname: 'asdads',
-      lastname: 'asdasdas',
-      username: 'mg17004',
-      email: 'administrador@systemexample.net',
-      password: 'asdasdasda',
-      role: 'ADMIN',
+      firstname: '',
+      lastname: '',
+      username: '',
+      email: '',
+      password: '',
+      role: 'STUDENT',
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
       registerUserWithEmail(values);
       getUsers();
-      // console.log(values);
     },
   });
 
@@ -129,7 +128,7 @@ const Users = ({ getUsers, users: { users, isLoading }, register: { regIsLoading
 
                   <div className="col-md-4 mb-3">
                     <label className="form-label">Role:</label>
-                    <select class="form-select" name="role" onChange={formik.handleChange} aria-label="Default select example">
+                    <select className="form-select" name="role" onChange={formik.handleChange} aria-label="Default select example">
                       <option value="STUDENT" selected={formik.values.role === "STUDENT" }>STUDENT</option>
                       <option value="ADMIN" selected={formik.values.role === "ADMIN" }>LIBRARIAN</option>
                     </select>

@@ -10,7 +10,6 @@ const Borrow = ({ auth, user, returnBook}) => {
 
   // function to dispatch returnBook action
   const returnBookHandler = (e, bookId, uid) => {
-    console.log(bookId);
     returnBook(bookId, uid);
   }
 
@@ -30,12 +29,9 @@ const Borrow = ({ auth, user, returnBook}) => {
             {user.populatedWithdrawals.map((withdrawal, index) => {
               return <li key={index} className="list-group-item">
                 <div className="row">
-                  <div className="col-md-6">
                     <p>{withdrawal.book.title}</p>
-                  </div>
-                  <div className="col-md-6">
                     <p>{moment(withdrawal.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
-                  </div>
+
                   {/* button to return book */}
                   <div className="col-md-12">
                     <button className="btn btn-primary" onClick={(e) => returnBookHandler(e, withdrawal.id, user.id)}>Return</button>
@@ -43,6 +39,8 @@ const Borrow = ({ auth, user, returnBook}) => {
                 </div>
               </li>;
             })}
+
+            {user.populatedWithdrawals.length === 0 ? <li className="list-group-item">No books borrowed</li> : null}
           </ul>
 
         </div>
