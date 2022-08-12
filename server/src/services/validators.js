@@ -6,7 +6,6 @@ export const loginSchema = Joi.object().keys({
 });
 
 export const registerSchema = Joi.object().keys({
-  name: Joi.string().trim().min(2).max(30).required(),
   firstname: Joi.string().min(2).max(40).required(),
   lastname: Joi.string().min(2).max(40).required(),
   username: Joi.string()
@@ -15,6 +14,7 @@ export const registerSchema = Joi.object().keys({
     .max(20)
     .regex(/^[a-zA-Z0-9_]+$/)
     .required(),
+  role: Joi.string().valid('STUDENT', 'ADMIN', ''),
   email: Joi.string().trim().email().required(),
   password: Joi.string().trim().min(6).max(20).required(),
 });

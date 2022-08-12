@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const profileSchema = Yup.object({
+export const userSchema = Yup.object({
   firstname: Yup.string()
     .min(2, 'Must be 2 characters at minimum')
     .max(30, 'Must be 30 characters or less')
@@ -9,7 +9,8 @@ export const profileSchema = Yup.object({
     .min(2, 'Must be 2 characters at minimum')
     .max(30, 'Must be 30 characters or less')
     .required(),
-    username: Yup.string()
+  email: Yup.string().email('Invalid email address').required('Required'),
+  username: Yup.string()
     .min(2, 'Must be 2 characters at minimum')
     .max(20, 'Must be 20 characters or less')
     .matches(/^[a-zA-Z0-9_]+$/, 'Invalid characters in username')

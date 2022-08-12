@@ -55,7 +55,7 @@ const Book = ({ book, auth, deleteBook, withdrawBook, editBook, clearBookError }
             {isEdit ? (
               <p className="">Copies avialable: {book.stock}</p>
             ) : (
-              <p>See details for existencies</p>
+              auth.isAuthenticated ? <p>See details for existencies</p> : <p>Login to see details</p>
             )}
             {auth.isAuthenticated && (
               <>

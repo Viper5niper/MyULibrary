@@ -14,7 +14,7 @@ const ReseedMessage = ({ handleReseed }) => {
   return (
     <div className='row mb-4'>
       <span className='col-md-8'>
-        If the app has been vandalized just reseed the database by clicking reseed button
+        You can restore the database with fresh information by clicking reseed button
       </span>
       <div className='col-md-4'>
         <button onClick={handleReseed} className="btn btn-info">

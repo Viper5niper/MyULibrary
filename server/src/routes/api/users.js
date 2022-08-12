@@ -5,6 +5,9 @@ import { resolve } from 'path';
 import { registerSchema } from '../../services/validators';
 import requireJwtAuth from '../../middleware/requireJwtAuth';
 import User, { hashPassword, validateUser } from '../../models/User';
+
+import Joi from 'joi';
+import faker from 'faker';
 // import Message from '../../models/Message';
 import { seedDb } from '../../utils/seed';
 
@@ -35,18 +38,26 @@ const upload = multer({
 //`checkit`, which is probably the option I'd suggest if  `validatem`
 
 router.post('/', async (req, res, next) => {
+
+  console.log(req.body);
   const { error } = Joi.validate(req.body, registerSchema);
   if (error) {
     return res.status(422).send({ message: error.details[0].message });
   }
 
-  const { firstname, lastname, email, password, name, username } = req.body;
+  const { firstname, lastname, email, password, username, role } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
+    let existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(422).send({ message: 'Email is in use' });
+    }
+
+    existingUser = await User.findOne({ username });
+
+    if (existingUser) {
+      return res.status(422).send({ message: 'Username is in use' });
     }
 
     try {
@@ -57,7 +68,7 @@ router.post('/', async (req, res, next) => {
         email,
         password,
         username,
-        name,
+        role,
         avatar: faker.image.avatar(),
       });
 
@@ -100,7 +111,7 @@ router.put('/:id', [requireJwtAuth, upload.single('avatar')], async (req, res, n
       return res.status(400).json({ message: 'Username alredy taken.' });
     }
 
-    const updatedUser = { avatar: avatarPath, name: req.body.name, username: req.body.username, password };
+    const updatedUser = { avatar: avatarPath, firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, password };
     // remove '', null, undefined
     Object.keys(updatedUser).forEach((k) => !updatedUser[k] && updatedUser[k] !== undefined && delete updatedUser[k]);
     // console.log(req.body, updatedUser);

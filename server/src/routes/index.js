@@ -4,7 +4,7 @@ import localAuthRoutes from './localAuth';
 // import facebookAuthRoutes from './facebookAuth';
 import apiRoutes from './api';
 const router = Router();
-
+ 
 router.use('/auth', localAuthRoutes);
 // router.use('/auth', googleAuthRoutes);
 // router.use('/auth', facebookAuthRoutes);

@@ -88,7 +88,6 @@ userSchema.methods.toJSON = function () {
     firstname: this.firstname,
     lastname: this.lastname,
     avatar: avatar,
-    name: this.name,
     role: this.role,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
@@ -156,6 +155,7 @@ export const validateUser = (user) => {
       .max(20)
       .regex(/^[a-zA-Z0-9_]+$/)
       .required(),
+    role: Joi.string().valid('STUDENT', 'ADMIN', ''),
     password: Joi.string().min(6).max(20).allow('').allow(null),
   };
 
